@@ -45,13 +45,12 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 	for (int i = 0; i < size / 64; i++)
 	{
 		sizeOfGroup = 64 * i;
-		if (i) { p++; n++; }
 		//if (i == 15) break;
 		if (*p == 0 && *n == 0) {
 			*r++ = 0;
 			continue;
 		}
-		aux = (*p + *n + carry);
+		aux = (*p++ + *n++ + carry);
 		carry = (num[sizeOfGroup + 63] && num2.num[sizeOfGroup + 63]);
 
 		*r++ = aux;

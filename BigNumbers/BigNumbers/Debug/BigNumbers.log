@@ -1,5 +1,5 @@
 ﻿  BigNumbers.cpp
-E:\GitHub\BigNumbers\BigNumbers\BigNumbers\BigNumbers.cpp(92,16): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
-E:\GitHub\BigNumbers\BigNumbers\BigNumbers\BigNumbers.cpp(203,10): warning C4244: 'argumento': conversión de '__int64' a 'size_t'; posible pérdida de datos
-E:\GitHub\BigNumbers\BigNumbers\BigNumbers\BigNumbers.cpp(208,10): warning C4244: 'argumento': conversión de '__int64' a 'size_t'; posible pérdida de datos
+E:\GitHub\BigNumbers\BigNumbers\BigNumbers\BigNumbers.cpp(91,16): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+E:\GitHub\BigNumbers\BigNumbers\BigNumbers\BigNumbers.cpp(202,10): warning C4244: 'argumento': conversión de '__int64' a 'size_t'; posible pérdida de datos
+E:\GitHub\BigNumbers\BigNumbers\BigNumbers\BigNumbers.cpp(207,10): warning C4244: 'argumento': conversión de '__int64' a 'size_t'; posible pérdida de datos
   BigNumbers.vcxproj -> E:\GitHub\BigNumbers\BigNumbers\Debug\BigNumbers.exe
