@@ -40,14 +40,14 @@ public:
 	UINT1024 operator%(int num2);
 	UINT1024 operator%(long long num2);
 
-	void operator=(UINT1024 num2);
+	void operator=(const UINT1024 &num2);
 
 #pragma endregion
 
 	
 	string ToString();
 
-	bool MultBy2(int arr[], int size);
+	bool MultBy2(int* arr, int size);
 	bool Sum2Arr(int arr1[], int arr2[], int size, int resSize);
 
 	long long value();

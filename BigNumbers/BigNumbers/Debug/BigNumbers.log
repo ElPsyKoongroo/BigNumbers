@@ -1,2 +1,7 @@
-﻿  main.cpp
+﻿  BigNumbers.cpp
+E:\GitHub\BigNumbers\BigNumbers\BigNumbers\BigNumbers.cpp(88,16): warning C4244: 'inicializando': conversión de 'double' a 'int'; posible pérdida de datos
+E:\GitHub\BigNumbers\BigNumbers\BigNumbers\BigNumbers.cpp(199,10): warning C4244: 'argumento': conversión de '__int64' a 'size_t'; posible pérdida de datos
+E:\GitHub\BigNumbers\BigNumbers\BigNumbers\BigNumbers.cpp(204,10): warning C4244: 'argumento': conversión de '__int64' a 'size_t'; posible pérdida de datos
+  main.cpp
+  Generando código...
   BigNumbers.vcxproj -> E:\GitHub\BigNumbers\BigNumbers\Debug\BigNumbers.exe

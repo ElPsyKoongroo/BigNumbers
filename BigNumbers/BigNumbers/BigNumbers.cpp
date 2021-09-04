@@ -34,37 +34,34 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 	unsigned long long aux = 0;
 	uint64_t sizeOfGroup = 0;
 
-	bool num1Smaller = getMax(this) < getMax(&num2);
+	//uint32_t num1Max = getMax(this);
+	//uint32_t num2Max = getMax(&num2);
+
+	//bool num1Smaller = num1Max < num2Max;
+	//uint32_t actualSize = num1Smaller ? num1Max + 1 : num2Max + 1;
 
 	UINT1024 result;
-	result.num = num1Smaller ? num2.num : this->num;
+	//result.num = num1Smaller ? num2.num : this->num;
+
+	result = *this;
+
+	//result.num = num;
 
 	uint64_t* r = (uint64_t*)&result.num;
-	uint64_t* p = num1Smaller ? (uint64_t*)(&num) : (uint64_t*)(&num2.num);
+	//uint64_t* p = num1Smaller ? (uint64_t*)(&num) : (uint64_t*)(&num2.num);
+	uint64_t* p = (uint64_t*)(&num2.num);
 
-	for (int i = 0; i < size/64; i++)
+	/*for (int i = 0; i < size/64; i++)
 	{
 		sizeOfGroup = 64 * i;
-
-		if (*p == 0) {
-			*r++ = 0;
-			continue;
-		}
-
 		*r += (*p++ + carry);
 		carry = (num[sizeOfGroup + 63] && num2.num[ sizeOfGroup + 63]);
+	}*/
 
-	}
 	return result;
 }
 
-
-
-
-
-
-
-void UINT1024::operator=(UINT1024 num2)
+void UINT1024::operator=(const UINT1024 &num2)
 {
 	this->num = num2.num;
 }
@@ -132,7 +129,7 @@ string UINT1024::ToString()
 
 bool UINT1024::MultBy2(int* arr, int size)
 {
-	short aux, carry = 0;
+	short aux, carry = 0;;
 
 	if (size == this->size-1) size--;
 
