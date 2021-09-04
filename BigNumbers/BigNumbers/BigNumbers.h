@@ -52,6 +52,8 @@ public:
 
 	long long value();
 
+	uint64_t getMax(const UINT1024* u);
+
 	void set(long long);
 	void set(long long,bool);
 	void reset(short);

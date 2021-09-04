@@ -11,12 +11,12 @@ int main()
 
     bitset<1000000> b;
     b.reset();
-    b.set(100000);
+    b.set(200000);
 
     z.num = b;
 
     b.reset();
-    b.set(100001);
+    b.set(200001);
 
     y.num = b;
 
@@ -32,10 +32,10 @@ int main()
 
     cout << "Fin" << endl;
 
-    cout << x.ToString() << endl;
+    //x.ToString();
 
     
 
-    cout << endl << chrono::duration_cast<chrono::nanoseconds>(end - begin).count();
+    cout << endl << chrono::duration_cast<chrono::microseconds>(end - begin).count();
 
 }
