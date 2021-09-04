@@ -11,12 +11,12 @@ int main()
 
     bitset<1000000> b;
     b.reset();
-    b.set(200000);
+    b.set(100000);
 
     z.num = b;
 
     b.reset();
-    b.set(200001);
+    b.set(100001);
 
     y.num = b;
 

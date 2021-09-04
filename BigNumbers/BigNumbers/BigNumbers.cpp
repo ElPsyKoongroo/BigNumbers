@@ -32,28 +32,29 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 {
 	bool carry = false;
 	unsigned long long aux = 0;
-	uint64_t sizeOfGroup = 0;
-
-	bool num1Smaller = getMax(this) < getMax(&num2);
+	unsigned long long BitGroup1 = 0;
+	unsigned long long BitGroup2 = 0;
+	int sizeOfGroup = 0;
 
 	UINT1024 result;
-	result.num = num1Smaller ? num2.num : this->num;
-
 	uint64_t* r = (uint64_t*)&result.num;
-	uint64_t* p = num1Smaller ? (uint64_t*)(&num) : (uint64_t*)(&num2.num);
+	uint64_t* p = (uint64_t*)(&num);
+	uint64_t* n = (uint64_t*)(&num2.num);
 
-	for (int i = 0; i < size/64; i++)
+
+	for (int i = 0; i < size / 64; i++)
 	{
 		sizeOfGroup = 64 * i;
-
-		if (*p == 0) {
+		if (i) { p++; n++; }
+		//if (i == 15) break;
+		if (*p == 0 && *n == 0) {
 			*r++ = 0;
 			continue;
 		}
+		aux = (*p + *n + carry);
+		carry = (num[sizeOfGroup + 63] && num2.num[sizeOfGroup + 63]);
 
-		*r += (*p++ + carry);
-		carry = (num[sizeOfGroup + 63] && num2.num[ sizeOfGroup + 63]);
-
+		*r++ = aux;
 	}
 	return result;
 }
