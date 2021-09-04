@@ -43,7 +43,7 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 	UINT1024 result;
 	//result.num = num1Smaller ? num2.num : this->num;
 
-	result = *this;
+	//result = *this;
 
 	//result.num = num;
 
@@ -57,6 +57,8 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 		*r += (*p++ + carry);
 		carry = (num[sizeOfGroup + 63] && num2.num[ sizeOfGroup + 63]);
 	}*/
+
+	result
 
 	return result;
 }
