@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+
+.vs/
+BigNumbers/Debug/
+BigNumbers/.vs/
+BigNumbers/BigNumbers/Debug/

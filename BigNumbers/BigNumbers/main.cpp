@@ -36,6 +36,6 @@ int main()
 
     
 
-    cout << endl << chrono::duration_cast<chrono::milliseconds>(end - begin).count();
+    cout << endl << chrono::duration_cast<chrono::nanoseconds>(end - begin).count();
 
 }
