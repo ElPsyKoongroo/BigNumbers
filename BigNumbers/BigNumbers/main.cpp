@@ -13,12 +13,17 @@ int main()
     b.reset();
     b.set(100000);
 
+
     z.num = b;
+
+    //z = 8;
 
     b.reset();
     b.set(100001);
 
     y.num = b;
+
+    //y = 4;
 
     chrono::steady_clock::time_point begin, end;
     
@@ -32,7 +37,7 @@ int main()
 
     cout << "Fin" << endl;
 
-    //x.ToString();
+    //cout << x.ToString();
 
     
 

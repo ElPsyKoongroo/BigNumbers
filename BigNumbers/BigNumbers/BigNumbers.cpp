@@ -36,7 +36,7 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 	unsigned long long BitGroup2 = 0;
 	int sizeOfGroup = 0;
 
-	UINT1024 result;
+	UINT1024 result = 0;
 	uint64_t* r = (uint64_t*)&result.num;
 	uint64_t* p = (uint64_t*)(&num);
 	uint64_t* n = (uint64_t*)(&num2.num);
@@ -45,11 +45,14 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 	for (int i = 0; i < size / 64; i++)
 	{
 		sizeOfGroup = 64 * i;
-		//if (i == 15) break;
-		if (*p == 0 && *n == 0) {
-			*r++ = 0;
+		//if (i == 15) break
+
+		if (!*p && !*n) {
+			r++;
+			p++; n++;
 			continue;
 		}
+
 		aux = (*p++ + *n++ + carry);
 		carry = (num[sizeOfGroup + 63] && num2.num[sizeOfGroup + 63]);
 
@@ -88,7 +91,7 @@ string UINT1024::ToString()
 	//	else { return to_string(this->num.to_ullong()); }
 	//}
 
-	int decDigits = max * log10(2) + 1;
+	int decDigits = max * log10(2) + 2;
 
 	int* res;
 	//res = new int[decDigits];
@@ -167,8 +170,8 @@ bool UINT1024::Sum2Arr(int arr1[], int arr2[], int size, int resSize)
 	while (carry)
 	{
 		if (size == this->size) break;
-		aux = arr1[actualSize+1] + carry;
-		arr1[actualSize+1] = aux % 10;
+		aux = arr1[actualSize] + carry;
+		arr1[actualSize] = aux % 10;
 		carry = aux / 10;
 		actualSize++;
 	}
