@@ -36,3 +36,7 @@
 BigNumbers/Debug/
 BigNumbers/.vs/
 BigNumbers/BigNumbers/Debug/
+BigNumbers/Release/
+BigNumbers/x64/
+BigNumbers/BigNumbers/Release/
+BigNumbers/BigNumbers/x64/
