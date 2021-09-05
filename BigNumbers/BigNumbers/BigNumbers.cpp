@@ -57,16 +57,28 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 
 	for (int i = 0; i < size / 64; i++)
 	{
+<<<<<<< HEAD
 		sizeOfGroup += 64;
 		sizeOfGroupOffset = sizeOfGroup + 63;
 		if (!*p && !*n) {
 			r++ = carry;
+=======
+		sizeOfGroup = 64 * i;
+		//if (i == 15) break
+
+		if (!*p && !*n) {
+			r++;
+>>>>>>> 5ce91bd18c77eacedefa65a841465f5865490667
 			p++; n++;
 			continue;
 		}
 
 		aux = (*p++ + *n++ + carry);
+<<<<<<< HEAD
 		carry = (num[sizeOfGroupOffset] && num2.num[sizeOfGroupOffset]);
+=======
+		carry = (num[sizeOfGroup + 63] && num2.num[sizeOfGroup + 63]);
+>>>>>>> 5ce91bd18c77eacedefa65a841465f5865490667
 
 		*r++ = aux;
 	}
@@ -101,7 +113,7 @@ string UINT1024::ToString()
 	//	else { return to_string(this->num.to_ullong()); }
 	//}
 
-	int decDigits = max * log10(2) + 1;
+	int decDigits = max * log10(2) + 2;
 
 	int* res;
 	//res = new int[decDigits];
@@ -180,8 +192,8 @@ bool UINT1024::Sum2Arr(int arr1[], int arr2[], int size, int resSize)
 	while (carry)
 	{
 		if (size == this->size) break;
-		aux = arr1[actualSize+1] + carry;
-		arr1[actualSize+1] = aux % 10;
+		aux = arr1[actualSize] + carry;
+		arr1[actualSize] = aux % 10;
 		carry = aux / 10;
 		actualSize++;
 	}
@@ -192,6 +204,22 @@ bool UINT1024::Sum2Arr(int arr1[], int arr2[], int size, int resSize)
 long long UINT1024::value()
 {
 	return this->num.to_ullong();
+}
+
+uint64_t UINT1024::getMax(const UINT1024* u)
+{
+	int max = -1;
+
+	for (int i = size - 1; i >= 0; i--)
+	{
+		if (u->num.test(i))
+		{
+			max = i;
+			break;
+		}
+	}
+
+	return max;
 }
 
 void UINT1024::set(long long pos)
