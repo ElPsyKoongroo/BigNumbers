@@ -13,17 +13,31 @@ UINT1024::UINT1024()
 	num = aux;
 }
 
+
 //UINT1024 UINT1024::operator+(UINT1024 num2)
 //{
 //	bool carry = false;
-//	bool aux = false;
-//	UINT1024 result;
+//	unsigned long long aux = 0;
+//	int sizeOfGroup = 0;
 //
-//	for (int i = 0; i < size; i++)
+//	UINT1024 result;
+//	uint64_t* r = (uint64_t*)&result.num;
+//	uint64_t* p = (uint64_t*)(&num);
+//	uint64_t* n = (uint64_t*)(&num2.num);
+//	
+//
+//	for (int i = 0; i < size/64; i++)
 //	{
-//		aux = (num[i] ^ num2.num[i]);
-//		result.set(i, aux ^ carry);
-//		carry = (num[i] && num2.num[i]) || (carry && aux);
+//		sizeOfGroup += 64;
+//		if (i) { p++; n++;}
+//		if (*p == 0 && *n == 0) {
+//			*r++ = carry;
+//			continue;
+//		}
+//		aux = (*p + *n + carry);
+//		carry = (num[sizeOfGroup + 63] && num2.num[ sizeOfGroup + 63]);
+//
+//		*r++ = aux;
 //	}
 //	return result;
 //}
@@ -31,35 +45,33 @@ UINT1024::UINT1024()
 UINT1024 UINT1024::operator+(UINT1024 num2)
 {
 	bool carry = false;
-	unsigned long long aux = 0;
-	unsigned long long BitGroup1 = 0;
-	unsigned long long BitGroup2 = 0;
+	uint64_t aux = 0;
 	int sizeOfGroup = 0;
+	int sizeOfGroupOffset = 0;
 
-	UINT1024 result;
+	UINT1024 result = 0;
 	uint64_t* r = (uint64_t*)&result.num;
 	uint64_t* p = (uint64_t*)(&num);
 	uint64_t* n = (uint64_t*)(&num2.num);
-	
 
-	for (int i = 0; i < size/64; i++)
+
+	for (int i = 0; i < size / 64; i++)
 	{
-		sizeOfGroup = 64 * i;
-		if (i) { p++; n++;}
-		//if (i == 15) break;
-		if (*p == 0 && *n == 0) {
-			*r++ = 0;
+		sizeOfGroup += 64;
+		sizeOfGroupOffset = sizeOfGroup + 63;
+		if (!*p && !*n) {
+			r++ = carry;
+			p++; n++;
 			continue;
 		}
-		aux = (*p + *n + carry);
-		carry = (num[sizeOfGroup + 63] && num2.num[ sizeOfGroup + 63]);
+
+		aux = (*p++ + *n++ + carry);
+		carry = (num[sizeOfGroupOffset] && num2.num[sizeOfGroupOffset]);
 
 		*r++ = aux;
 	}
 	return result;
 }
-
-
 
 
 
