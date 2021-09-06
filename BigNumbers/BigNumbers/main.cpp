@@ -12,32 +12,21 @@ int main()
     bitset<1024> b;
     b.reset();
 
-    b.set(1019);
-
+    b.set(4);
 
     z.num = b;
 
-    //z = 8;
-
     y.num = b;
-
-    //y = 4;
 
     chrono::steady_clock::time_point begin, end;
     
     cout << "Inicio" << endl;
 
     begin = chrono::steady_clock::now();
-    auto a = y + z;
-    //x = y + z;
-    for (int i = 0; i < 24; i++) {
-        x = x + a;
-    }
-    
+
+    cout << z.BitsToDecimal();
 
     end = chrono::steady_clock::now();
-
-    cout << x.ToString();
 
     cout << endl << "Fin" << endl;
 

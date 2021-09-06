@@ -27,7 +27,6 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 
 	for (int i = 0; i < size / 64; i++)
 	{
-		//if (i == 15) break
 		sz = sizeOfGroup + 63;
 		if (!*p && !*n) {
 			*r++ = carry;
@@ -105,31 +104,53 @@ string UINT1024::ToString()
 	return stream.str();
 }
 
-string UINT1024::BitsToDecimal() {
-	int max = getMax(this);
-	int DigitsSize = max * log10(2) + 1;
-	vector<bool> BCD(DigitsSize * 2, 0);
+string UINT1024::BitsToDecimal()
+{
+	uint16_t max = getMax(this);				 //Pilla la posicion del bit mas importante.
+	if (max == -1) return "0";
+	uint16_t DigitsSize = max * log10(2) + 1; //Tamaño de la cadena de digitos.
+	vector<bool> BCD(DigitsSize * 4 + (DigitsSize % 2 ? 4 : 0), 0); //Vector de los digitos en BCD.
 
-	for (int i = 0; i <= max; i++) {
-		rotate(BCD.begin(), BCD.begin() + 1, BCD.end());
-		BCD[0] = num[max - i];
-		for (int j = 0; j <= max / 4; j++) {
+	uint8_t* PBCDDigit;
 
+	for (uint16_t i = 0; i <= max; i++)
+	{
+		rotate(BCD.begin(), BCD.begin() + 1, BCD.end());    // <- Left Shift
 
+		BCD[0] = num[max - i];								// Asignacion de bit
 
+		PBCDDigit = (uint8_t*)&BCD;
 
+		for (uint8_t j = 0; j < DigitsSize / 2; j++)
+		{
+			if ((*PBCDDigit & 0x0F) > 4) 
+				*PBCDDigit += 3;
+			
+			if (((*PBCDDigit & 0b11110000)>>4) > 4)
+				*PBCDDigit += 48; //3 << 4
+			
+			PBCDDigit++;
 		}
-
 	}
 
+	string Decimal = "";
+	PBCDDigit = (uint8_t*)&BCD;
+	PBCDDigit += (DigitsSize - (DigitsSize % 2 ? 1 : 2))/2;	//Posiciona el puntero \
+															  al final del vector
 
+	for (uint8_t i = 0; i <= DigitsSize / 2; i++)
+	{
+		Decimal += ('0' + *PBCDDigit & 0xF0);
+		Decimal += ('0' + *PBCDDigit & 0x0F);
+		PBCDDigit--;
+	}
 
+	while (Decimal[0] == '0')
+	{
+		Decimal.erase(0, 1);
+	}
 
-
-
-
-
-	return NULL;
+	return Decimal;
 }
 
 #pragma endregion

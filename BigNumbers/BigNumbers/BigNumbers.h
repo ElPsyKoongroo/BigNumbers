@@ -6,6 +6,7 @@
 #include <cmath>
 #include <sstream>
 #include <fstream>
+#include <array>
 
 using namespace std;
 class UINT1024
