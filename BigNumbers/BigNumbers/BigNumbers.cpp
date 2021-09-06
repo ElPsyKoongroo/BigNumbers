@@ -11,15 +11,6 @@ UINT1024::UINT1024()
 	num = aux;
 }
 
-<<<<<<< Updated upstream
-UINT1024 UINT1024::operator+(UINT1024 num2)
-{
-	bool carry = false;
-	uint64_t aux = 0;
-	int sizeOfGroup = 0;
-	int sizeOfGroupOffset = 0;
-
-=======
 #pragma region	OPERATORS
 
 UINT1024 UINT1024::operator+(UINT1024 num2)
@@ -28,7 +19,6 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 	unsigned long long aux = 0;
 	int sizeOfGroup = 0;
 	int sz = 0;
->>>>>>> Stashed changes
 	UINT1024 result = 0;
 	uint64_t* r = (uint64_t*)&result.num;
 	uint64_t* p = (uint64_t*)(&num);
@@ -37,13 +27,8 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 
 	for (int i = 0; i < size / 64; i++)
 	{
-<<<<<<< Updated upstream
-		sizeOfGroup += 64;
-		sizeOfGroupOffset = sizeOfGroup + 63;
-=======
 		//if (i == 15) break
 		sz = sizeOfGroup + 63;
->>>>>>> Stashed changes
 		if (!*p && !*n) {
 			*r++ = carry;
 			p++; n++;
@@ -51,11 +36,7 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 		}
 
 		aux = (*p++ + *n++ + carry);
-<<<<<<< Updated upstream
-		carry = (num[sizeOfGroupOffset] && num2.num[sizeOfGroupOffset]);
-=======
 		carry = (num[sz] && num2.num[sz]);
->>>>>>> Stashed changes
 
 		*r++ = aux;
 		sizeOfGroup += 64;
@@ -64,12 +45,6 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 }
 
 
-<<<<<<< Updated upstream
-
-
-
-=======
->>>>>>> Stashed changes
 void UINT1024::operator=(UINT1024 num2)
 {
 	this->num = num2.num;

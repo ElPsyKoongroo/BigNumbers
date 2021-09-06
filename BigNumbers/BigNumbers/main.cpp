@@ -11,24 +11,14 @@ int main()
 
     bitset<1024> b;
     b.reset();
-<<<<<<< Updated upstream
-    b.set(100);
-=======
 
     b.set(1019);
->>>>>>> Stashed changes
 
 
     z.num = b;
 
     //z = 8;
 
-<<<<<<< Updated upstream
-    b.reset();
-    b.set(100);
-
-=======
->>>>>>> Stashed changes
     y.num = b;
 
     //y = 4;
