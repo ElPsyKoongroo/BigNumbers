@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <bitset>
 #include <iostream>
+#include <vector>
 #include <string>
 #include <cmath>
 #include <sstream>
@@ -11,10 +12,10 @@ class UINT1024
 {
 private:
 	
-	const int size = 1000000;
+	const int size = 1024;
 
 public:
-	bitset<1000000> num{ 0x0 };
+	bitset<1024> num{ 0x0 };
 	UINT1024(uint64_t init);
 	UINT1024();
 
@@ -48,6 +49,7 @@ public:
 	string ToString();
 
 	bool MultBy2(int arr[], int size);
+	string BitsToDecimal();
 	bool Sum2Arr(int arr1[], int arr2[], int size, int resSize);
 
 	long long value();

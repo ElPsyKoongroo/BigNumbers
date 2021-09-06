@@ -2,17 +2,16 @@
 
 UINT1024::UINT1024(uint64_t init)
 {
-	bitset<1000000> aux(init);
+	bitset<1024> aux(init);
 	num = aux;
 }
-
-
 UINT1024::UINT1024()
 {
-	bitset<1000000> aux(0x0);
+	bitset<1024> aux(0x0);
 	num = aux;
 }
 
+<<<<<<< Updated upstream
 UINT1024 UINT1024::operator+(UINT1024 num2)
 {
 	bool carry = false;
@@ -20,6 +19,16 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 	int sizeOfGroup = 0;
 	int sizeOfGroupOffset = 0;
 
+=======
+#pragma region	OPERATORS
+
+UINT1024 UINT1024::operator+(UINT1024 num2)
+{
+	bool carry = false;
+	unsigned long long aux = 0;
+	int sizeOfGroup = 0;
+	int sz = 0;
+>>>>>>> Stashed changes
 	UINT1024 result = 0;
 	uint64_t* r = (uint64_t*)&result.num;
 	uint64_t* p = (uint64_t*)(&num);
@@ -28,8 +37,13 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 
 	for (int i = 0; i < size / 64; i++)
 	{
+<<<<<<< Updated upstream
 		sizeOfGroup += 64;
 		sizeOfGroupOffset = sizeOfGroup + 63;
+=======
+		//if (i == 15) break
+		sz = sizeOfGroup + 63;
+>>>>>>> Stashed changes
 		if (!*p && !*n) {
 			*r++ = carry;
 			p++; n++;
@@ -37,34 +51,36 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 		}
 
 		aux = (*p++ + *n++ + carry);
+<<<<<<< Updated upstream
 		carry = (num[sizeOfGroupOffset] && num2.num[sizeOfGroupOffset]);
+=======
+		carry = (num[sz] && num2.num[sz]);
+>>>>>>> Stashed changes
 
 		*r++ = aux;
+		sizeOfGroup += 64;
 	}
 	return result;
 }
 
 
+<<<<<<< Updated upstream
 
 
 
+=======
+>>>>>>> Stashed changes
 void UINT1024::operator=(UINT1024 num2)
 {
 	this->num = num2.num;
 }
+#pragma endregion
+
+#pragma region PUBLICMETHODS
 
 string UINT1024::ToString()
 {
-	int max = -1;
-
-	for(int i = size-1; i >= 0; i--)
-	{
-		if (this->num.test(i))
-		{
-			max = i;
-			break;
-		}
-	}
+	int max = getMax(this);
 
 	//if (max < 64)
 	//{
@@ -113,6 +129,37 @@ string UINT1024::ToString()
 
 	return stream.str();
 }
+
+string UINT1024::BitsToDecimal() {
+	int max = getMax(this);
+	int DigitsSize = max * log10(2) + 1;
+	vector<bool> BCD(DigitsSize * 2, 0);
+
+	for (int i = 0; i <= max; i++) {
+		rotate(BCD.begin(), BCD.begin() + 1, BCD.end());
+		BCD[0] = num[max - i];
+		for (int j = 0; j <= max / 4; j++) {
+
+
+
+
+		}
+
+	}
+
+
+
+
+
+
+
+
+	return NULL;
+}
+
+#pragma endregion
+
+#pragma region PRIVATEMETHODS
 
 bool UINT1024::MultBy2(int* arr, int size)
 {
@@ -167,18 +214,19 @@ long long UINT1024::value()
 
 uint64_t UINT1024::getMax(const UINT1024* u)
 {
-	int max = -1;
+	uint64_t* BitGroup = (uint64_t*)&(u->num);
+	BitGroup += 15;
 
-	for (int i = size - 1; i >= 0; i--)
+	for (int i = size/64 - 1; i >= 0; i--)
 	{
-		if (u->num.test(i))
+		if (*BitGroup)
 		{
-			max = i;
-			break;
+			return log2(*BitGroup) + 64*i; // Devuelve la posicion del primer uno.
 		}
+		BitGroup--;
 	}
 
-	return max;
+	return -1;
 }
 
 void UINT1024::set(long long pos)
@@ -200,3 +248,5 @@ bool UINT1024::get(short pos)
 {
 	return num.test(pos);
 }
+
+#pragma endregion

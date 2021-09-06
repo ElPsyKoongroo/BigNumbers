@@ -9,18 +9,26 @@ int main()
 {
     UINT1024 x, y, z;
 
-    bitset<1000000> b;
+    bitset<1024> b;
     b.reset();
+<<<<<<< Updated upstream
     b.set(100);
+=======
+
+    b.set(1019);
+>>>>>>> Stashed changes
 
 
     z.num = b;
 
     //z = 8;
 
+<<<<<<< Updated upstream
     b.reset();
     b.set(100);
 
+=======
+>>>>>>> Stashed changes
     y.num = b;
 
     //y = 4;
@@ -30,17 +38,21 @@ int main()
     cout << "Inicio" << endl;
 
     begin = chrono::steady_clock::now();
-
-    x = y + z;
+    auto a = y + z;
+    //x = y + z;
+    for (int i = 0; i < 24; i++) {
+        x = x + a;
+    }
+    
 
     end = chrono::steady_clock::now();
 
-    cout << "Fin" << endl;
+    cout << x.ToString();
 
-    //cout << x.ToString();
+    cout << endl << "Fin" << endl;
 
     
 
-    cout << endl << chrono::duration_cast<chrono::microseconds>(end - begin).count();
+    cout << endl << chrono::duration_cast<chrono::nanoseconds>(end - begin).count();
 
 }
