@@ -12,7 +12,7 @@ int main()
     bitset<1024> b;
     b.reset();
 
-    b.set(10);
+    b.set(1000);
 
     z.num = b;
 
@@ -25,6 +25,8 @@ int main()
     begin = chrono::steady_clock::now();
 
     cout << z.BitsToDecimal();
+
+    //cout << z.ToString();
 
     end = chrono::steady_clock::now();
 

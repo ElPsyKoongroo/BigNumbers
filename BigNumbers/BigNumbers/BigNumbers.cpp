@@ -135,7 +135,7 @@ string UINT1024::BitsToDecimal()
 	{
 		leftShift(BCD, sizeBCD);
 
-		BCD[0] |= num[max - i];								// Asignacion de bit
+		BCD[0] |= num[max - i];
 
 		PBCDDigit = (uint8_t*)BCD;
 
@@ -149,6 +149,7 @@ string UINT1024::BitsToDecimal()
 			
 			PBCDDigit++;
 		}
+		
 	}
 	leftShift(BCD, sizeBCD);
 	BCD[0] |= num[0];
@@ -159,15 +160,15 @@ string UINT1024::BitsToDecimal()
 
 	for (uint8_t i = 0; i <= sizeBCD / 2; i++)
 	{
-		Decimal += ('0' + (*PBCDDigit & 0b11110000));
+		Decimal += ('0' + ((*PBCDDigit & 0b11110000)>>4));
 		Decimal += ('0' + (*PBCDDigit & 0b00001111));
 		PBCDDigit--;
 	}
 
-	/*while (Decimal[0] == '0')
+	while (Decimal[0] == '0')
 	{
 		Decimal.erase(0, 1);
-	}*/
+	}
 
 	return Decimal;
 }
@@ -246,14 +247,13 @@ uint64_t UINT1024::getMax(const UINT1024* u)
 
 void UINT1024::leftShift(uint8_t BCD[], uint8_t sizeBCD)
 {
-	sizeBCD *= 2;
 	bool carry = false, nextCarry = false;
 
 	for (int i = 0; i < sizeBCD; i++)
 	{
 		carry = nextCarry;
 
-		nextCarry = BCD[i] & 1000;
+		nextCarry = BCD[i] & 10000000;
 
 		BCD[i] <<= 1;
 
