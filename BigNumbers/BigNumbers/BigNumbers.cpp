@@ -109,21 +109,39 @@ string UINT1024::BitsToDecimal()
 	uint16_t max = getMax(this);				 //Pilla la posicion del bit mas importante.
 	if (max == -1) return "0";
 	uint16_t DigitsSize = max * log10(2) + 1; //Tamaño de la cadena de digitos.
-	vector<bool> BCD(DigitsSize * 4 + (DigitsSize % 2 ? 4 : 0), 0); //Vector de los digitos en BCD.
 
-	uint8_t* PBCDDigit;
+	//vector<bool> BCD(sizeBCD); //Vector de los digitos en BCD
+	//uint8_t sizeBCD = DigitsSize * 4 + (DigitsSize % 2 ? 4 : 0); // vector<bool>
 
-	for (uint16_t i = 0; i <= max; i++)
+	uint8_t sizeBCD = DigitsSize / 2 + (DigitsSize % 2 ? 1 : 0);
+
+	//vector<uint8_t> BCD(sizeBCD, 0); //Vector de los digitos en BCD.
+
+	uint8_t* BCD = new uint8_t[sizeBCD];
+
+	for (int i = 0; i < sizeBCD; i++)
 	{
-		rotate(BCD.begin(), BCD.begin() + 1, BCD.end());    // <- Left Shift
+		BCD[i] = 0;
+	}
 
-		BCD[0] = num[max - i];								// Asignacion de bit
 
-		PBCDDigit = (uint8_t*)&BCD;
 
-		for (uint8_t j = 0; j < DigitsSize / 2; j++)
+
+
+
+	uint8_t* PBCDDigit = new uint8_t;
+
+	for (uint16_t i = 0; i < max; i++)
+	{
+		leftShift(BCD, sizeBCD);
+
+		BCD[0] |= num[max - i];								// Asignacion de bit
+
+		PBCDDigit = (uint8_t*)BCD;
+
+		for (uint8_t j = 0; j < sizeBCD; j++)
 		{
-			if ((*PBCDDigit & 0x0F) > 4) 
+			if ((*PBCDDigit & 0b00001111) > 4) 
 				*PBCDDigit += 3;
 			
 			if (((*PBCDDigit & 0b11110000)>>4) > 4)
@@ -132,23 +150,24 @@ string UINT1024::BitsToDecimal()
 			PBCDDigit++;
 		}
 	}
+	leftShift(BCD, sizeBCD);
+	BCD[0] |= num[0];
 
 	string Decimal = "";
-	PBCDDigit = (uint8_t*)&BCD;
-	PBCDDigit += (DigitsSize - (DigitsSize % 2 ? 1 : 2))/2;	//Posiciona el puntero \
-															  al final del vector
 
-	for (uint8_t i = 0; i <= DigitsSize / 2; i++)
+	PBCDDigit = &BCD[sizeBCD - 1];
+
+	for (uint8_t i = 0; i <= sizeBCD / 2; i++)
 	{
-		Decimal += ('0' + *PBCDDigit & 0xF0);
-		Decimal += ('0' + *PBCDDigit & 0x0F);
+		Decimal += ('0' + (*PBCDDigit & 0b11110000));
+		Decimal += ('0' + (*PBCDDigit & 0b00001111));
 		PBCDDigit--;
 	}
 
-	while (Decimal[0] == '0')
+	/*while (Decimal[0] == '0')
 	{
 		Decimal.erase(0, 1);
-	}
+	}*/
 
 	return Decimal;
 }
@@ -223,6 +242,23 @@ uint64_t UINT1024::getMax(const UINT1024* u)
 	}
 
 	return -1;
+}
+
+void UINT1024::leftShift(uint8_t BCD[], uint8_t sizeBCD)
+{
+	sizeBCD *= 2;
+	bool carry = false, nextCarry = false;
+
+	for (int i = 0; i < sizeBCD; i++)
+	{
+		carry = nextCarry;
+
+		nextCarry = BCD[i] & 1000;
+
+		BCD[i] <<= 1;
+
+		BCD[i] |= carry;
+	}
 }
 
 void UINT1024::set(long long pos)

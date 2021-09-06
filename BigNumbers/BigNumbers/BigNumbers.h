@@ -56,6 +56,7 @@ public:
 	long long value();
 
 	uint64_t getMax(const UINT1024* u);
+	void leftShift(uint8_t BCD[], uint8_t sizeBCD);
 
 	void set(long long);
 	void set(long long,bool);

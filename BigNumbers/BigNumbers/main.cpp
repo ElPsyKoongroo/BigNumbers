@@ -12,7 +12,7 @@ int main()
     bitset<1024> b;
     b.reset();
 
-    b.set(4);
+    b.set(10);
 
     z.num = b;
 
