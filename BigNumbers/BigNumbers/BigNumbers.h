@@ -14,6 +14,7 @@ class UINT1024
 private:
 	
 	const int size = 1024;
+	uint32_t Base32[16];
 
 public:
 	bitset<1024> num{ 0x0 };
@@ -43,6 +44,8 @@ public:
 	UINT1024 operator%(long long num2);
 
 	void operator=(UINT1024 num2);
+	friend ostream& operator<<(ostream& ss, UINT1024& s);
+
 
 #pragma endregion
 
@@ -51,6 +54,9 @@ public:
 
 	bool MultBy2(int arr[], int size);
 	string BitsToDecimal();
+	string FastB2DConversion();
+	void DivTwoWords(uint64_t a, uint64_t b, uint32_t c, uint32_t* r, uint32_t* rest);
+	bool IsSetToZero(uint32_t& iterator, uint32_t* lista);
 	bool Sum2Arr(int arr1[], int arr2[], int size, int resSize);
 
 	long long value();

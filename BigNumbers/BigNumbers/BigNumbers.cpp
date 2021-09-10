@@ -43,11 +43,17 @@ UINT1024 UINT1024::operator+(UINT1024 num2)
 	return result;
 }
 
-
 void UINT1024::operator=(UINT1024 num2)
 {
 	this->num = num2.num;
 }
+
+ostream& operator<<(ostream& ss, UINT1024& s)
+{
+	return (ss << s.FastB2DConversion());
+}
+
+
 #pragma endregion
 
 #pragma region PUBLICMETHODS
@@ -173,6 +179,54 @@ string UINT1024::BitsToDecimal()
 	return Decimal;
 }
 
+string UINT1024::FastB2DConversion() {
+	uint32_t* Base32 = (uint32_t*)(&num);
+	uint32_t* Final		= (uint32_t*)calloc(32, sizeof(uint32_t));
+	string Decimal		= "";
+	uint32_t iterator	= 31;
+	for (; iterator > 0 && Base32[iterator] == 0; --iterator);
+
+	do {
+		uint32_t r			= 0;
+		int i				= iterator;
+
+		for (; i >= 0; --i) { DivTwoWords(r, Base32[i] , 10 , &Final[i], &r); }
+
+		memcpy(Base32, Final , 32 * sizeof(uint32_t));
+		
+		memset(Final, 0 , 32 * sizeof(uint32_t));
+		
+		Decimal.insert(Decimal.begin(),'0' + r);
+
+	} while (!IsSetToZero(iterator,Base32));
+
+	return Decimal;
+}
+
+void UINT1024::DivTwoWords(uint64_t a, uint64_t b, uint32_t c, uint32_t* r, uint32_t* rest) {
+	uint64_t big = ((a << 32) | b);// EDX:EAX      q-> EAX, r-> EDX
+	lldiv_t st = lldiv(big, c);
+	*r = st.quot;
+	*rest = st.rem;
+	/*
+	uint32_t r_;
+	uint32_t rest_;
+	r_ = big / c;
+	rest_ = big % c;
+	*r = r_;
+	*rest = rest_;
+	*/
+}
+
+bool UINT1024::IsSetToZero(uint32_t& iterator, uint32_t* lista) {
+	int x = iterator;
+	for (; x > 0 && lista[x] == 0; x--);
+	iterator = x;
+	if (!x && !lista[x]) { return true; }
+	return false;
+}
+
+
 #pragma endregion
 
 #pragma region PRIVATEMETHODS
@@ -282,3 +336,4 @@ bool UINT1024::get(short pos)
 }
 
 #pragma endregion
+
