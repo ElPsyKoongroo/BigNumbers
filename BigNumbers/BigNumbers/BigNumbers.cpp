@@ -53,6 +53,11 @@ ostream& operator<<(ostream& ss, UINT1024& s)
 	return (ss << s.FastB2DConversion());
 }
 
+//ostream& operator<<(ostream& ss, UINT1024 s)
+//{
+//	return (ss << s.FastB2DConversion());
+//}
+
 
 #pragma endregion
 
@@ -68,7 +73,7 @@ string UINT1024::ToString()
 	//	else { return to_string(this->num.to_ullong()); }
 	//}
 
-	int decDigits = max * log10(2) + 2;
+	int decDigits = max * log10(2) + 1;
 
 	int* res;
 	//res = new int[decDigits];
@@ -180,7 +185,7 @@ string UINT1024::BitsToDecimal()
 }
 
 string UINT1024::FastB2DConversion() {
-	uint32_t* Base32 = (uint32_t*)(&num);
+	Base32 = (uint32_t*)(&num);
 	uint32_t* Final		= (uint32_t*)calloc(32, sizeof(uint32_t));
 	string Decimal		= "";
 	uint32_t iterator	= 31;
@@ -199,6 +204,10 @@ string UINT1024::FastB2DConversion() {
 		Decimal.insert(Decimal.begin(),'0' + r);
 
 	} while (!IsSetToZero(iterator,Base32));
+
+	Final = nullptr;
+
+	free(Final);
 
 	return Decimal;
 }
@@ -325,9 +334,9 @@ void UINT1024::set(long long pos, bool value)
 	num.set(pos, value);
 }
 
-void UINT1024::reset(short pos)
+void UINT1024::reset()
 {
-	num.reset(pos);
+	num.reset();
 }
 
 bool UINT1024::get(short pos)
