@@ -11,6 +11,20 @@ UINT1024::UINT1024()
 	num = aux;
 }
 
+UINT1024::UINT1024(std::string number)
+{
+	std::string::iterator it = --number.end();
+	int repeat = number.size()-1;
+	for (; it >= number.begin(); --it) {
+		for (int i = 0; i < repeat; i++) {
+			UINT1024 decimal = (*it - 48);
+			
+			
+
+		}
+	}
+}
+
 #pragma region	OPERATORS
 
 UINT1024 UINT1024::operator+(UINT1024 num2)
@@ -119,7 +133,7 @@ string UINT1024::BitsToDecimal()
 {
 	uint16_t max = getMax(this);				 //Pilla la posicion del bit mas importante.
 	if (max == -1) return "0";
-	uint16_t DigitsSize = max * log10(2) + 1; //Tamaño de la cadena de digitos.
+	uint16_t DigitsSize = max * log10(2) + 1; //TamaÃ±o de la cadena de digitos.
 
 	//vector<bool> BCD(sizeBCD); //Vector de los digitos en BCD
 	//uint8_t sizeBCD = DigitsSize * 4 + (DigitsSize % 2 ? 4 : 0); // vector<bool>
