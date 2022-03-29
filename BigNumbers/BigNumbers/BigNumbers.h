@@ -19,6 +19,7 @@ private:
 public:
 	bitset<1024> num{ 0x0 };
 	UINT1024(uint64_t init);
+	UINT1024(std::string number);
 	UINT1024();
 
 #pragma region OPERATORS
